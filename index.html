@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Surpresa 🎉</title>
+  <style>
+    /* ---------------- BODY ---------------- */
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #000;
+      font-family: Arial, sans-serif;
+      color: #fff;
+      padding-top: 100px; /* espaço para navbar */
+      flex-direction: column;
+    }
+
+    /* ---------------- NAVBAR ---------------- */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: #111;
+      padding: 20px 0;
+      z-index: 1000;
+    }
+
+    .nav-itens ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+    }
+
+    .nav-itens li {
+      font-size: 1.5rem;
+      font-weight: bold;
+      opacity: 0;                     /* começa invisível */
+      transform: translateY(-20px);   /* sobe um pouco */
+      animation: aparecer 1s forwards;
+    }
+
+    /* animação de entrada com delays */
+    .nav-itens li:nth-child(1) { animation-delay: 0.5s, 2s; }
+    .nav-itens li:nth-child(2) { animation-delay: 1.5s, 3s; }
+    .nav-itens li:nth-child(3) { animation-delay: 2.5s, 4s; }
+    .nav-itens li:nth-child(4) { animation-delay: 3.5s, 5s; }
+
+    @keyframes aparecer {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Neon piscando */
+    .nav-itens li {
+      animation-fill-mode: forwards;
+    }
+    .nav-itens li:nth-child(1) { animation: aparecer 1s forwards, neonBlue 2s infinite alternate; animation-delay: 0.5s, 2s; }
+    .nav-itens li:nth-child(2) { animation: aparecer 1s forwards, neonPink 2s infinite alternate; animation-delay: 1.5s, 3s; }
+    .nav-itens li:nth-child(3) { animation: aparecer 1s forwards, neonPurple 2s infinite alternate; animation-delay: 2.5s, 4s; }
+    .nav-itens li:nth-child(4) { animation: aparecer 1s forwards, neonGreen 2s infinite alternate; animation-delay: 3.5s, 5s; }
+
+    @keyframes neonBlue {
+      from { text-shadow: 0 0 5px rgb(192, 34, 255), 0 0 15px rgb(234, 8, 255); color: #fff; }
+      to   { text-shadow: 0 0 15px rgb(187, 0, 255), 0 0 30px rgb(219, 37, 255); color: rgb(211, 16, 255); }
+    }
+    @keyframes neonPink {
+      from { text-shadow: 0 0 5px #ff00ff, 0 0 15px #ff00ff; color: #fff; }
+      to   { text-shadow: 0 0 15px #ff00ff, 0 0 30px #ff00ff; color: #ff66ff; }
+    }
+    @keyframes neonPurple {
+      from { text-shadow: 0 0 5px #a64dff, 0 0 15px #a64dff; color: #fff; }
+      to   { text-shadow: 0 0 15px #a64dff, 0 0 30px #a64dff; color: #c299ff; }
+    }
+    @keyframes neonGreen {
+      from { text-shadow: 0 0 5px rgb(255, 48, 217), 0 0 15px rgb(255, 20, 224); color: #fff; }
+      to   { text-shadow: 0 0 15px rgb(255, 38, 233), 0 0 30px rgb(255, 21, 197); color: #ff2391; }
+    }
+
+    /* ---------------- CRONÔMETRO ---------------- */
+    #time-counter {
+        margin-top: 300px;
+      padding: 30px 40px;
+      border-radius: 12px;
+      background: #111111a9;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      animation: neonTimer 2s infinite alternate;
+    }
+
+    #time-counter h2 {
+      font-size: 1.6rem;
+      margin-bottom: 20px;
+      color: rgb(198, 43, 255);
+    }
+
+    #time-values {
+      font-size: 1.4rem;
+      font-weight: bold;
+      line-height: 1.8;
+    }
+
+    @keyframes neonTimer {
+      from { box-shadow: 0 0 10px rgb(234, 43, 255), 0 0 20px rgb(180, 42, 255); }
+      to   { box-shadow: 0 0 20px rgb(220, 23, 255), 0 0 40px rgb(233, 32, 255); }
+    }
+  </style>
+</head>
+<body>
+
+<video autoplay muted loop id="background-video">
+  <source src="img/MicrosoftTeams-video.mp4" type="video/mp4">
+</video>
+  <!-- NAVBAR -->
+  <div class="navbar">
+    <div class="nav-itens">
+      <ul>
+        <li>Feliz</li>
+        <li>aniversário</li>
+        <li>minha</li>
+        <li>Princesa</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- CRONÔMETRO CENTRAL -->
+  <div id="time-counter">
+    <h2>Eu te amo a:</h2>
+    <div id="time-values">--</div>
+  </div>
+
+  <script>
+  (function(){
+    const startDate = new Date("2025-02-21T00:00:00-03:00");
+    const el = document.getElementById("time-values");
+
+    function updateCounter() {
+      const now = new Date();
+
+      let years = now.getFullYear() - startDate.getFullYear();
+      let months = now.getMonth() - startDate.getMonth();
+      let days = now.getDate() - startDate.getDate();
+      let hours = now.getHours() - startDate.getHours();
+      let minutes = now.getMinutes() - startDate.getMinutes();
+      let seconds = now.getSeconds() - startDate.getSeconds();
+
+      if (seconds < 0) { seconds += 60; minutes--; }
+      if (minutes < 0) { minutes += 60; hours--; }
+      if (hours < 0)   { hours += 24; days--; }
+      if (days < 0) {
+        const prevMonthDays = new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+        days += prevMonthDays;
+        months--;
+      }
+      if (months < 0) { months += 12; years--; }
+
+      el.textContent =
+        years + " anos, " +
+        months + " meses, " +
+        days + " dias, " +
+        hours + " horas, " +
+        minutes + " minutos, " +
+        seconds + " segundos";
+    }
+
+    updateCounter();
+    setInterval(updateCounter, 1000);
+  })();
+  </script>
+</body>
+</html>
